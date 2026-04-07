@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/Gkk-Web/', // Updating to the new repository name
-  publicDir: 'Gkk-Web',
+  publicDir: 'public',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
