@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Ghar Ka Khana - Order authentic homemade food from verified home chefs in your neighborhood. Fresh, healthy, and delicious home-cooked meals delivered to your door.">
+    <meta name="keywords"
+        content="home food delivery, homemade food, home chef, tiffin service, home cooked meals, Indian food delivery, ghar ka khana">
+    <meta name="author" content="Ghar Ka Khana">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gharkakhana.in/">
+    <meta property="og:title" content="Ghar Ka Khana - Homemade Food, Delivered Fresh">
+    <meta property="og:description"
+        content="Order authentic homemade food from verified home chefs near you. Experience the taste of home cooking with every meal.">
+    <meta property="og:image" content="images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gharkakhana.in/">
+    <meta property="twitter:title" content="Ghar Ka Khana - Homemade Food, Delivered Fresh">
+    <meta property="twitter:description" content="Order authentic homemade food from verified home chefs near you.">
+
+    <title>Ghar Ka Khana - Homemade Food, Delivered Fresh</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+    <style>
+        /* Enhanced Home Page Styles */
+
+        /* Features Section Enhanced */
+        .features-enhanced {
+            padding: 5rem 0;
+            background: var(--color-white);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .features-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .features-header p {
+            font-size: 1.15rem;
+            color: var(--color-text-secondary);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .features-grid-new {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+
+        .feature-card-new {
+            background: linear-gradient(135deg, rgba(246, 251, 233, 0.8) 0%, rgba(255, 231, 163, 0.15) 100%);
+            border: 1px solid var(--color-border-light);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card-new::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-gold) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card-new:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(45, 168, 50, 0.2);
+        }
+
+        .feature-card-new:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon-new {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--color-primary-subtle) 0%, var(--color-gold-light) 100%);
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 15px rgba(45, 168, 50, 0.1);
+        }
+
+        .feature-card-new h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+
+        .feature-card-new p {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* App Preview Enhanced */
+        .app-preview-enhanced {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-preview-enhanced::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(45, 168, 50, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .app-preview-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-preview-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-preview-header p {
+            font-size: 1.15rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .app-mockup-row-new {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-mockup-new {
+            transition: transform 0.4s ease;
+        }
+
+        .app-mockup-new:hover {
+            transform: translateY(-10px);
+        }
+
+        .app-mockup-new:nth-child(2) {
+            transform: scale(1.08);
+            z-index: 2;
+        }
+
+        .app-mockup-new:nth-child(2):hover {
+            transform: scale(1.08) translateY(-10px);
+        }
+
+        .device-frame-new {
+            background: #fff;
+            border-radius: 2rem;
+            padding: 0.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--color-border-light);
+            overflow: hidden;
+        }
+
+        .device-frame-new img {
+            width: 200px;
+            height: auto;
+            border-radius: 1.5rem;
+            display: block;
+        }
+
+        .mockup-caption-new {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        .store-section {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .store-badges-new {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .store-badge-new {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .store-badge-new:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .store-badge-new img {
+            height: 48px;
+            display: block;
+        }
+
+        .store-note {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        /* How It Works Enhanced */
+        .how-it-works-enhanced {
+            padding: 5rem 0;
+            background: var(--color-white);
+            position: relative;
+        }
+
+        .hiw-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hiw-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hiw-header p {
+            font-size: 1.15rem;
+            color: var(--color-text-secondary);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 15%;
+            right: 15%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary), var(--color-gold), var(--color-primary), var(--color-primary-light));
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        .step-card-new {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: var(--color-white);
+            padding: 0 1rem;
+        }
+
+        .step-number-new {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-white);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-gold) 100%);
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(45, 168, 50, 0.3);
+            position: relative;
+        }
+
+        .step-number-new::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 2px solid rgba(45, 168, 50, 0.2);
+            border-radius: 50%;
+        }
+
+        .step-icon-new {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card-new h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+
+        .step-card-new p {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* Testimonials Enhanced */
+        .testimonials-enhanced {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, var(--color-primary-subtle) 0%, var(--color-bg) 100%);
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .testimonials-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials-header p {
+            font-size: 1.15rem;
+            color: var(--color-text-secondary);
+        }
+
+        .testimonials-carousel-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 1rem 0;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .testimonials-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+        }
+
+        .testimonials-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .testimonial-card-new {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 0 0 400px;
+            max-width: 400px;
+            margin-right: 2rem;
+        }
+
+        .testimonial-card-new::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 4rem;
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .testimonial-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial-rating-new {
+            color: var(--color-gold);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text-new {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--color-text);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author-new {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border-light);
+        }
+
+        .testimonial-avatar-new {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary-subtle) 0%, var(--color-gold-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .testimonial-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        .testimonial-info span {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        /* CTA Section Enhanced */
+        .cta-enhanced {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1d7a20 50%, var(--color-gold) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-enhanced::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-enhanced::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 2.75rem;
+            color: white;
+            margin-bottom: 1.25rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons-new {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons-new .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-cta-primary {
+            background: white;
+            color: var(--color-primary) !important;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: white !important;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        .btn-cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid-new {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid-new {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .feature-card-new {
+                padding: 1.5rem 1rem;
+            }
+
+            .app-mockup-row-new {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .app-mockup-new:nth-child(2) {
+                transform: none;
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .testimonial-card-new {
+                flex: 0 0 300px;
+                max-width: 300px;
+                margin-right: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-buttons-new {
+                flex-direction: column;
+            }
+
+            .cta-buttons-new .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== Header ===== -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🍲</span>
+                <span>Ghar Ka Khana</span>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <!-- Download button removed -->
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== Mobile Sidebar ===== -->
+    <div class="sidebar-overlay"></div>
+    <aside class="mobile-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <span class="logo-icon">🍲</span>
+                <span>Ghar Ka Khana</span>
+            </a>
+            <button class="sidebar-close" aria-label="Close menu">✕</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Menu</div>
+                <a href="index.html" class="sidebar-link active">
+                    <span class="sidebar-link-icon">🏠</span>
+                    <span>Home</span>
+                </a>
+                <a href="about.html" class="sidebar-link">
+                    <span class="sidebar-link-icon">ℹ️</span>
+                    <span>About Us</span>
+                </a>
+                <a href="contact.html" class="sidebar-link">
+                    <span class="sidebar-link-icon">📞</span>
+                    <span>Contact</span>
+                </a>
+                <!-- Download link removed -->
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Legal</div>
+                <a href="privacy-policy.html" class="sidebar-link">
+                    <span class="sidebar-link-icon">🔒</span>
+                    <span>Privacy Policy</span>
+                </a>
+                <a href="terms-and-conditions.html" class="sidebar-link">
+                    <span class="sidebar-link-icon">📋</span>
+                    <span>Terms & Conditions</span>
+                </a>
+                <a href="refund-policy.html" class="sidebar-link">
+                    <span class="sidebar-link-icon">💰</span>
+                    <span>Refund Policy</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <!-- Sidebar CTA removed -->
+            <div class="sidebar-contact">
+                <div class="sidebar-contact-item">
+                    <span>📧</span>
+                    <span>noreplay.gkk26@gmail.com</span>
+                </div>
+                <div class="sidebar-contact-item">
+                    <span>📞</span>
+                    <span>8910894306</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Hero Section (UNCHANGED) ===== -->
+    <section class="hero">
+        <div class="container hero-flex">
+            <div class="hero-content">
+                <h1>
+                    <span class="highlight">Ghar Ka Khana</span>
+                </h1>
+                <div class="hero-localized">
+                    <span class="hero-hindi">घर का खाना</span>
+                </div>
+                <p class="hero-tagline">
+                    Fresh, authentic home-cooked meals from trusted local chefs.
+                </p>
+                <div class="hero-launch-note">Kolkata only • <span class="hero-launch-soon"
+                        style="background: rgba(194,148,27,0.15); color: #c2941b; padding: 2px 8px; border-radius: 4px; display: inline-block;">Available
+                        on Play Store & App Store</span>
+                </div>
+                <div class="hero-store-badges"
+                    style="display: flex; gap: 10px; margin-top: 20px; justify-content: center;">
+                    <img src="images/google-play-badge.svg" alt="Get it on Google Play" height="50">
+                    <img src="images/app-store-badge.svg" alt="Download on the App Store" height="50">
+                </div>
+                <div class="trust-bar">
+                    <span>★ 4.9/5 Early User Rating</span>
+                    <span>• 100% Verified Home Chefs</span>
+                    <span>• Secure Payments</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-phone-mockup hero-mockup-3d">
+                    <video src="videos/gkk_screen.mp4" autoplay loop muted playsinline preload="auto"
+                        poster="images/app-screenshot-1.jpg"
+                        style="width:100%;height:100%;object-fit:cover;border-radius:1.6rem;box-shadow:0 0 0 2px #f3f4f6;image-rendering: crisp-edges;image-rendering: pixelated;"
+                        alt="Ghar Ka Khana App Demo"></video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Features Section (ENHANCED) ===== -->
+    <section class="features-enhanced" id="features">
+        <div class="container">
+            <div class="features-header fade-in">
+                <h2>Why <span class="text-gradient">Ghar Ka Khana?</span></h2>
+                <p>What makes us different from other food delivery apps?</p>
+            </div>
+            <div class="features-grid-new">
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">🏠</div>
+                    <h3>Truly Homemade</h3>
+                    <p>Every meal is cooked in a real home kitchen by a trusted local chef. No restaurant shortcuts.</p>
+                </div>
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">🧑‍🍳</div>
+                    <h3>Verified Chefs</h3>
+                    <p>All chefs are background-checked and food safety trained for your peace of mind.</p>
+                </div>
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">🌱</div>
+                    <h3>Fresh & Local</h3>
+                    <p>Ingredients are sourced daily from local markets for authentic, healthy meals.</p>
+                </div>
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Hot, fresh food delivered quickly across Kolkata. Track your order in real time.</p>
+                </div>
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">🔒</div>
+                    <h3>Secure Payments</h3>
+                    <p>Pay safely with Razorpay. Multiple payment options, always encrypted.</p>
+                </div>
+                <div class="feature-card-new fade-in">
+                    <div class="feature-icon-new">⭐</div>
+                    <h3>Real Reviews</h3>
+                    <p>See honest feedback from real customers. No fake ratings, just real experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== App Preview Section (ENHANCED) ===== -->
+    <section class="app-preview-enhanced" id="app-preview">
+        <div class="container">
+            <div class="app-preview-header fade-in">
+                <h2>See the App <span class="text-gradient">in Action</span></h2>
+                <p>Preview the Ghar Ka Khana mobile experience – simple, modern, and built for comfort food lovers.</p>
+            </div>
+            <div class="app-mockup-row-new">
+                <div class="app-mockup-new fade-in">
+                    <div class="device-frame-new">
+                        <img src="images/Home.png" alt="App Home Screenshot" loading="lazy">
+                    </div>
+                    <div class="mockup-caption-new">Home & Kitchens</div>
+                </div>
+                <div class="app-mockup-new fade-in">
+                    <div class="device-frame-new">
+                        <img src="images/wallet.png" alt="Wallet Screenshot" loading="lazy">
+                    </div>
+                    <div class="mockup-caption-new">Wallet & Subscriptions</div>
+                </div>
+                <div class="app-mockup-new fade-in">
+                    <div class="device-frame-new">
+                        <img src="images/premium.png" alt="Premium Screenshot" loading="lazy">
+                    </div>
+                    <div class="mockup-caption-new">Premium Membership</div>
+                </div>
+            </div>
+
+            <div class="store-section">
+                <div class="store-badges-new">
+                    <div class="store-badge-new">
+                        <img src="images/google-play-badge.svg" alt="Get it on Google Play">
+                    </div>
+                    <div class="store-badge-new">
+                        <img src="images/app-store-badge.svg" alt="Download on the App Store">
+                    </div>
+                </div>
+                <p class="store-note">Available on Play Store & App Store</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== How It Works Section (ENHANCED) ===== -->
+    <section class="how-it-works-enhanced" id="how-it-works">
+        <div class="container">
+            <div class="hiw-header fade-in">
+                <h2>How It <span class="text-gradient">Works</span></h2>
+                <p>Getting your favorite homemade meal is just 3 simple steps away</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card-new fade-in">
+                    <div class="step-number-new">1</div>
+                    <div class="step-icon-new">🔍</div>
+                    <h3>Browse Menus</h3>
+                    <p>Explore local home chefs and their delicious menus. Filter by cuisine, ratings, or dietary
+                        preferences.</p>
+                </div>
+
+                <div class="step-card-new fade-in">
+                    <div class="step-number-new">2</div>
+                    <div class="step-icon-new">🛒</div>
+                    <h3>Place Your Order</h3>
+                    <p>Select your favorites, customize if needed, and checkout securely with multiple payment options.
+                    </p>
+                </div>
+
+                <div class="step-card-new fade-in">
+                    <div class="step-number-new">3</div>
+                    <div class="step-icon-new">🍽️</div>
+                    <h3>Enjoy Fresh Food</h3>
+                    <p>Sit back and relax as hot, homemade meals are delivered straight to your door.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Testimonials Section (ENHANCED) ===== -->
+    <section class="testimonials-enhanced" id="testimonials">
+        <div class="container">
+            <div class="testimonials-header fade-in">
+                <h2>What Our <span class="text-gradient">Customers Say</span></h2>
+                <p>Join thousands of happy customers who've rediscovered the joy of home-cooked food</p>
+            </div>
+
+            <div class="testimonials-carousel-container">
+                <div class="testimonials-track">
+                    <!-- Set 1 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Excited to try home-cooked food in Kolkata! Looking forward to
+                            the official launch."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩</div>
+                            <div class="testimonial-info">
+                                <h4>Priya Das</h4>
+                                <span>Ballygunge, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The app is easy to use and the food tastes just like home.
+                            Great initiative for Kolkata!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨</div>
+                            <div class="testimonial-info">
+                                <h4>Rahul Chatterjee</h4>
+                                <span>Salt Lake, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Happy to support local home chefs. Wishing the team all the
+                            best for the official launch!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩</div>
+                            <div class="testimonial-info">
+                                <h4>Anjali Banerjee</h4>
+                                <span>Gariahat, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Finally a healthy alternative to ordering restaurant food every
+                            day. My stomach approves!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🦸‍♂️</div>
+                            <div class="testimonial-info">
+                                <h4>Vikram Singh</h4>
+                                <span>Dum Dum, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Reminds me of my mom's cooking back home. The authentic taste
+                            is unmatched."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍🎓</div>
+                            <div class="testimonial-info">
+                                <h4>Sneha Roy</h4>
+                                <span>Jadavpur, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Great variety of cuisines available. I can order different
+                            home-style meals every day."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍💻</div>
+                            <div class="testimonial-info">
+                                <h4>Amit Ghosh</h4>
+                                <span>New Town, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Ordered lunch for my office colleagues, everyone loved the
+                            homely taste. Highly recommended!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍💼</div>
+                            <div class="testimonial-info">
+                                <h4>Suresh Nair</h4>
+                                <span>Behala, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"My kids usually hate outside food but they loved the dal-chawal
+                            combo. Very hygienic."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍👧</div>
+                            <div class="testimonial-info">
+                                <h4>Riya Sen</h4>
+                                <span>Tollygunge, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The packaging was excellent and spill-proof. Food arrived
+                            piping hot."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🧑‍🎨</div>
+                            <div class="testimonial-info">
+                                <h4>Arjun Kapoor</h4>
+                                <span>Alipore, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Best way to get authentic Bengali fish curry without the hassle
+                            of cooking."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👴</div>
+                            <div class="testimonial-info">
+                                <h4>Kabir Khan</h4>
+                                <span>Rajarhat, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"I live alone and missing home food was a daily struggle. Ghar
+                            Ka Khana is a lifesaver."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🧑‍🦱</div>
+                            <div class="testimonial-info">
+                                <h4>Pooja Mehta</h4>
+                                <span>Lake Gardens, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Reasonable prices for such high quality food. Value for money."
+                        </p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍🏫</div>
+                            <div class="testimonial-info">
+                                <h4>Rohan Malhotra</h4>
+                                <span>Bhawanipore, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The subscription plan is very convenient for my daily dinner
+                            needs."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍⚕️</div>
+                            <div class="testimonial-info">
+                                <h4>Ishaan Gupta</h4>
+                                <span>Kankurgachi, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Love that I can support local housewives. The food has that
+                            special 'ma ke haath ka swad'."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍🎤</div>
+                            <div class="testimonial-info">
+                                <h4>Zara Ahmed</h4>
+                                <span>Entally, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Simple, non-oily, and delicious. Just what I need after a long
+                            day at work."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🤵</div>
+                            <div class="testimonial-info">
+                                <h4>Debankar Das</h4>
+                                <span>Shyambazar, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Set 2 (Duplicated for Loop) -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Excited to try home-cooked food in Kolkata! Looking forward to
+                            the official launch."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩</div>
+                            <div class="testimonial-info">
+                                <h4>Priya Das</h4>
+                                <span>Ballygunge, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The app is easy to use and the food tastes just like home.
+                            Great initiative for Kolkata!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨</div>
+                            <div class="testimonial-info">
+                                <h4>Rahul Chatterjee</h4>
+                                <span>Salt Lake, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Happy to support local home chefs. Wishing the team all the
+                            best for the official launch!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩</div>
+                            <div class="testimonial-info">
+                                <h4>Anjali Banerjee</h4>
+                                <span>Gariahat, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Finally a healthy alternative to ordering restaurant food every
+                            day. My stomach approves!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🦸‍♂️</div>
+                            <div class="testimonial-info">
+                                <h4>Vikram Singh</h4>
+                                <span>Dum Dum, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Reminds me of my mom's cooking back home. The authentic taste
+                            is unmatched."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍🎓</div>
+                            <div class="testimonial-info">
+                                <h4>Sneha Roy</h4>
+                                <span>Jadavpur, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Great variety of cuisines available. I can order different
+                            home-style meals every day."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍💻</div>
+                            <div class="testimonial-info">
+                                <h4>Amit Ghosh</h4>
+                                <span>New Town, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Ordered lunch for my office colleagues, everyone loved the
+                            homely taste. Highly recommended!"</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍💼</div>
+                            <div class="testimonial-info">
+                                <h4>Suresh Nair</h4>
+                                <span>Behala, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"My kids usually hate outside food but they loved the dal-chawal
+                            combo. Very hygienic."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍👧</div>
+                            <div class="testimonial-info">
+                                <h4>Riya Sen</h4>
+                                <span>Tollygunge, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The packaging was excellent and spill-proof. Food arrived
+                            piping hot."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🧑‍🎨</div>
+                            <div class="testimonial-info">
+                                <h4>Arjun Kapoor</h4>
+                                <span>Alipore, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Best way to get authentic Bengali fish curry without the hassle
+                            of cooking."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👴</div>
+                            <div class="testimonial-info">
+                                <h4>Kabir Khan</h4>
+                                <span>Rajarhat, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"I live alone and missing home food was a daily struggle. Ghar
+                            Ka Khana is a lifesaver."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🧑‍🦱</div>
+                            <div class="testimonial-info">
+                                <h4>Pooja Mehta</h4>
+                                <span>Lake Gardens, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Reasonable prices for such high quality food. Value for money."
+                        </p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍🏫</div>
+                            <div class="testimonial-info">
+                                <h4>Rohan Malhotra</h4>
+                                <span>Bhawanipore, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"The subscription plan is very convenient for my daily dinner
+                            needs."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👨‍⚕️</div>
+                            <div class="testimonial-info">
+                                <h4>Ishaan Gupta</h4>
+                                <span>Kankurgachi, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Love that I can support local housewives. The food has that
+                            special 'ma ke haath ka swad'."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">👩‍🎤</div>
+                            <div class="testimonial-info">
+                                <h4>Zara Ahmed</h4>
+                                <span>Entally, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-rating-new">★★★★★</div>
+                        <p class="testimonial-text-new">"Simple, non-oily, and delicious. Just what I need after a long
+                            day at work."</p>
+                        <div class="testimonial-author-new">
+                            <div class="testimonial-avatar-new">🤵</div>
+                            <div class="testimonial-info">
+                                <h4>Debankar Das</h4>
+                                <span>Shyambazar, Kolkata</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA Section (ENHANCED) ===== -->
+    <section class="cta-enhanced" id="download">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Taste Home Cooking?</h2>
+                <p>Download the Ghar Ka Khana app now and discover the joy of authentic homemade meals delivered fresh
+                    to your doorstep!</p>
+
+                <div class="cta-buttons-new">
+                    <a href="contact.html" class="btn btn-cta-secondary btn-lg">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">🍲</span>
+                        <span>Ghar Ka Khana</span>
+                    </a>
+                    <p>Bringing the taste of home-cooked meals to everyone. Order from verified home chefs in your
+                        neighborhood.</p>
+                    <div class="social-note">Will be available on social media soon</div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <!-- Download App footer link removed -->
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li>📧 noreplay.gkk26@gmail.com</li>
+                        <li>📞 8910894306</li>
+                        <li>📍 Unnamed Road, Gobindapur, Natunpara, Baruipur, West Bengal 700144, India</li>
+                        <li>Plus Code: 7MJC9C9M+R2</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Ghar Ka Khana. All Rights Reserved. Made with ❤️ in India</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-and-conditions.html">Terms</a>
+                    <a href="refund-policy.html">Refund</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script>
+        // Make the hero video play faster (e.g., 1.5x speed)
+        document.addEventListener('DOMContentLoaded', function () {
+            var heroVideo = document.querySelector('.hero-phone-mockup video');
+            if (heroVideo) {
+                heroVideo.playbackRate = 1.5;
+            }
+        });
+    </script>
+</body>
+
+</html>
