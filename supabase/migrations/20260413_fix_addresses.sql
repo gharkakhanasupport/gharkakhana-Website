@@ -37,16 +37,16 @@ ALTER TABLE public.saved_addresses ENABLE ROW LEVEL SECURITY;
 -- 4. Setup RLS Policies
 DROP POLICY IF EXISTS "Users can view their own addresses" ON public.saved_addresses;
 CREATE POLICY "Users can view their own addresses" 
-ON public.saved_addresses FOR SELECT TO authenticated USING (auth.uid() = user_id);
+ON public.saved_addresses FOR SELECT TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can insert their own addresses" ON public.saved_addresses;
 CREATE POLICY "Users can insert their own addresses" 
-ON public.saved_addresses FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+ON public.saved_addresses FOR INSERT TO authenticated WITH CHECK (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can update their own addresses" ON public.saved_addresses;
 CREATE POLICY "Users can update their own addresses" 
-ON public.saved_addresses FOR UPDATE TO authenticated USING (auth.uid() = user_id);
+ON public.saved_addresses FOR UPDATE TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can delete their own addresses" ON public.saved_addresses;
 CREATE POLICY "Users can delete their own addresses" 
-ON public.saved_addresses FOR DELETE TO authenticated USING (auth.uid() = user_id);
+ON public.saved_addresses FOR DELETE TO authenticated USING (auth.uid()::text = user_id::text);

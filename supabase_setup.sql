@@ -139,26 +139,26 @@ CREATE POLICY "Allow public read access to coupons" ON public.coupons FOR SELECT
 
 -- User Restricted Policies
 DROP POLICY IF EXISTS "Users can manage their own wallet" ON public.wallet;
-CREATE POLICY "Users can manage their own wallet" ON public.wallet FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own wallet" ON public.wallet FOR ALL TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can manage their own wallet_transactions" ON public.wallet_transactions;
 CREATE POLICY "Users can manage their own wallet_transactions" ON public.wallet_transactions FOR ALL TO authenticated 
-USING (wallet_id IN (SELECT id FROM public.wallet WHERE user_id = auth.uid()));
+USING (wallet_id IN (SELECT id FROM public.wallet WHERE user_id::text = auth.uid()::text));
 
 DROP POLICY IF EXISTS "Users can manage their own addresses" ON public.saved_addresses;
-CREATE POLICY "Users can manage their own addresses" ON public.saved_addresses FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own addresses" ON public.saved_addresses FOR ALL TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can view their own orders" ON public.orders;
-CREATE POLICY "Users can view their own orders" ON public.orders FOR SELECT TO authenticated USING (auth.uid() = customer_id);
+CREATE POLICY "Users can view their own orders" ON public.orders FOR SELECT TO authenticated USING (auth.uid()::text = customer_id::text);
 
 DROP POLICY IF EXISTS "Users can insert their own orders" ON public.orders;
-CREATE POLICY "Users can insert their own orders" ON public.orders FOR INSERT TO authenticated WITH CHECK (auth.uid() = customer_id);
+CREATE POLICY "Users can insert their own orders" ON public.orders FOR INSERT TO authenticated WITH CHECK (auth.uid()::text = customer_id::text);
 
 DROP POLICY IF EXISTS "Users can manage their own payments" ON public.payments;
-CREATE POLICY "Users can manage their own payments" ON public.payments FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own payments" ON public.payments FOR ALL TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can manage their own favorites" ON public.favorites;
-CREATE POLICY "Users can manage their own favorites" ON public.favorites FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own favorites" ON public.favorites FOR ALL TO authenticated USING (auth.uid()::text = user_id::text);
 
 DROP POLICY IF EXISTS "Users can manage their own notifications" ON public.notifications;
-CREATE POLICY "Users can manage their own notifications" ON public.notifications FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage their own notifications" ON public.notifications FOR ALL TO authenticated USING (auth.uid()::text = user_id::text);
