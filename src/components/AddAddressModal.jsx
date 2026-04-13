@@ -11,6 +11,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
     full_name: '',
     phone_number: '',
     street_address: '',
+    area: '',
     city: '',
     state: '',
     pincode: '',
@@ -23,6 +24,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
         full_name: initialData.full_name || '',
         phone_number: initialData.phone_number || '',
         street_address: initialData.street_address || initialData.full_address || '',
+        area: initialData.area || '',
         city: initialData.city || '',
         state: initialData.state || '',
         pincode: initialData.pincode || '',
@@ -33,6 +35,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
         full_name: '',
         phone_number: '',
         street_address: '',
+        area: '',
         city: '',
         state: '',
         pincode: '',
@@ -43,7 +46,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.full_name || !formData.phone_number || !formData.street_address || !formData.city || !formData.state || !formData.pincode) {
+    if (!formData.full_name || !formData.phone_number || !formData.street_address || !formData.area || !formData.city || !formData.state || !formData.pincode) {
       toast.error('Please fill all fields');
       return;
     }
@@ -59,6 +62,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
             full_name: formData.full_name,
             phone_number: formData.phone_number,
             street_address: formData.street_address,
+            area: formData.area,
             city: formData.city,
             state: formData.state,
             pincode: formData.pincode,
@@ -80,6 +84,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
             full_name: formData.full_name,
             phone_number: formData.phone_number,
             street_address: formData.street_address,
+            area: formData.area,
             city: formData.city,
             state: formData.state,
             pincode: formData.pincode,
@@ -139,6 +144,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           
           streetAddress += `\n📍 ${absLat}° ${latDir}, ${absLon}° ${lonDir}`;
           
+          const area = addr.suburb || addr.neighbourhood || addr.residential || addr.city_district || '';
           const city = addr.city || addr.town || addr.village || '';
           const state = addr.state || '';
           const pincode = addr.postcode || '';
@@ -146,6 +152,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           setFormData(prev => ({
             ...prev,
             street_address: streetAddress,
+            area: area,
             city: city,
             state: state,
             pincode: pincode
@@ -256,6 +263,17 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
+                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">Area / Locality</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.area}
+                    onChange={(e) => setFormData({...formData, area: e.target.value})}
+                    placeholder="Sector V"
+                    className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
+                  />
+                </div>
+                <div className="space-y-1">
                   <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">City</label>
                   <input
                     type="text"
@@ -266,6 +284,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
                     className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
                   />
                 </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">State</label>
                   <input
@@ -277,9 +298,6 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
                     className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">Pincode</label>
                   <input
@@ -291,18 +309,19 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
                     className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">Address Type</label>
-                  <select
-                    value={formData.type}
-                    onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
-                  >
-                    <option value="Home">Home</option>
-                    <option value="Work">Work</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">Address Type</label>
+                <select
+                  value={formData.type}
+                  onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
+                >
+                  <option value="Home">Home</option>
+                  <option value="Work">Work</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               <div className="grid grid-cols-3 gap-2 py-2">
