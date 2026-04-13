@@ -38,7 +38,6 @@ export function SiteHeader() {
   if (isAppRoute) {
     currentNavLinks = [
       { label: 'Home', to: '/' },
-      { label: 'Dishes', to: '/menu' },
       { label: 'Menu', to: '/menu' }
     ];
     if (user) currentNavLinks.push({ label: 'Dashboard', to: '/dashboard' });
