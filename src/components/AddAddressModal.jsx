@@ -125,8 +125,13 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           
           let formattedAddress = addressParts.filter(Boolean).join(', ');
           
-          // Append precise coordinates
-          formattedAddress += `\n[Coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}]`;
+          // Style with directional markers (Option 3)
+          const latDir = latitude >= 0 ? 'N' : 'S';
+          const lonDir = longitude >= 0 ? 'E' : 'W';
+          const absLat = Math.abs(latitude).toFixed(6);
+          const absLon = Math.abs(longitude).toFixed(6);
+          
+          formattedAddress += `\n📍 ${absLat}° ${latDir}, ${absLon}° ${lonDir}`;
           
           const pincode = addr.postcode || '';
 
