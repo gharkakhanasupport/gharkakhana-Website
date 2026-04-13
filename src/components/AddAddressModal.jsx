@@ -10,7 +10,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
   const [formData, setFormData] = useState({
     full_name: '',
     phone_number: '',
-    full_address: '',
+    street_address: '',
+    city: '',
+    state: '',
     pincode: '',
     type: 'Home'
   });
@@ -20,7 +22,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
       setFormData({
         full_name: initialData.full_name || '',
         phone_number: initialData.phone_number || '',
-        full_address: initialData.full_address || '',
+        street_address: initialData.street_address || initialData.full_address || '',
+        city: initialData.city || '',
+        state: initialData.state || '',
         pincode: initialData.pincode || '',
         type: initialData.type || 'Home'
       });
@@ -28,7 +32,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
       setFormData({
         full_name: '',
         phone_number: '',
-        full_address: '',
+        street_address: '',
+        city: '',
+        state: '',
         pincode: '',
         type: 'Home'
       });
@@ -37,7 +43,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.full_name || !formData.phone_number || !formData.full_address || !formData.pincode) {
+    if (!formData.full_name || !formData.phone_number || !formData.street_address || !formData.city || !formData.state || !formData.pincode) {
       toast.error('Please fill all fields');
       return;
     }
@@ -52,7 +58,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           .update({
             full_name: formData.full_name,
             phone_number: formData.phone_number,
-            full_address: formData.full_address,
+            street_address: formData.street_address,
+            city: formData.city,
+            state: formData.state,
             pincode: formData.pincode,
             type: formData.type
           })
@@ -71,7 +79,9 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
             user_id: userId,
             full_name: formData.full_name,
             phone_number: formData.phone_number,
-            full_address: formData.full_address,
+            street_address: formData.street_address,
+            city: formData.city,
+            state: formData.state,
             pincode: formData.pincode,
             type: formData.type
           })
@@ -118,26 +128,26 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           if (addr.house_number) addressParts.push(`No. ${addr.house_number}`);
           if (addr.road || addr.pedestrian) addressParts.push(addr.road || addr.pedestrian);
           if (addr.neighbourhood || addr.suburb) addressParts.push(addr.neighbourhood || addr.suburb);
-          if (addr.city_district) addressParts.push(addr.city_district);
-          if (addr.city || addr.town || addr.village) addressParts.push(addr.city || addr.town || addr.village);
-          if (addr.state_district) addressParts.push(addr.state_district);
-          if (addr.state) addressParts.push(addr.state);
           
-          let formattedAddress = addressParts.filter(Boolean).join(', ');
+          let streetAddress = addressParts.filter(Boolean).join(', ');
           
-          // Style with directional markers (Option 3)
+          // Style with directional markers
           const latDir = latitude >= 0 ? 'N' : 'S';
           const lonDir = longitude >= 0 ? 'E' : 'W';
           const absLat = Math.abs(latitude).toFixed(6);
           const absLon = Math.abs(longitude).toFixed(6);
           
-          formattedAddress += `\n📍 ${absLat}° ${latDir}, ${absLon}° ${lonDir}`;
+          streetAddress += `\n📍 ${absLat}° ${latDir}, ${absLon}° ${lonDir}`;
           
+          const city = addr.city || addr.town || addr.village || '';
+          const state = addr.state || '';
           const pincode = addr.postcode || '';
 
           setFormData(prev => ({
             ...prev,
-            full_address: formattedAddress,
+            street_address: streetAddress,
+            city: city,
+            state: state,
             pincode: pincode
           }));
 
@@ -220,7 +230,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
 
               <div className="space-y-1">
                 <div className="flex items-center justify-between ml-1 mb-1">
-                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider">Full Address</label>
+                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider">Street Address</label>
                   <button 
                     type="button" 
                     onClick={handleGetLocation}
@@ -235,11 +245,36 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
                   <FiMapPin className="absolute left-4 top-4 text-brand-brown/30" />
                   <textarea
                     required
-                    rows="3"
-                    value={formData.full_address}
-                    onChange={(e) => setFormData({...formData, full_address: e.target.value})}
+                    rows="2"
+                    value={formData.street_address}
+                    onChange={(e) => setFormData({...formData, street_address: e.target.value})}
                     placeholder="House No, Building, Street, Area..."
                     className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 pl-11 pr-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all resize-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">City</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.city}
+                    onChange={(e) => setFormData({...formData, city: e.target.value})}
+                    placeholder="Kolkata"
+                    className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-brand-brown/50 uppercase tracking-wider ml-1">State</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.state}
+                    onChange={(e) => setFormData({...formData, state: e.target.value})}
+                    placeholder="West Bengal"
+                    className="w-full rounded-2xl border-brand-brown/10 bg-brand-cream/20 py-3 px-4 text-sm focus:border-brand-green focus:ring-brand-green transition-all"
                   />
                 </div>
               </div>
