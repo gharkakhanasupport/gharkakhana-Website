@@ -41,47 +41,64 @@ function AnimatedRoute({ children }) {
 }
 
 function ProtectedRoute({ children }) {
-  const { user, loading } = useAuthStore();
-  if (loading) return null; // Wait for initial check so we don't flash to sign-in instantly
+  const { user } = useAuthStore();
   if (!user) return <Navigate to="/signin" replace />;
   return children;
 }
 
 function AuthRoute({ children }) {
-  const { user, loading } = useAuthStore();
-  if (loading) return null; // Wait for initial check
+  const { user } = useAuthStore();
   if (user) return <Navigate to="/dashboard" replace />;
   return children;
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const { initializeAuth } = useAuthStore();
+  const [splashLoading, setSplashLoading] = useState(true);
+  const { initializeAuth, loading: authLoading } = useAuthStore();
 
   useEffect(() => {
     const unsub = initializeAuth();
-    const timer = setTimeout(() => setLoading(false), 2600);
+    const timer = setTimeout(() => setSplashLoading(false), 2600);
     return () => {
       clearTimeout(timer);
       unsub();
     };
   }, [initializeAuth]);
 
+  // Combined initialization state
+  const isInitializing = splashLoading || authLoading;
+
   return (
     <SiteSettingsProvider>
       <CartProvider>
-        <AppContent loading={loading} />
+        <div className="min-h-screen bg-[#f2d4a8] text-brand-brown antialiased">
+          <AnimatePresence>
+            {isInitializing && (
+              <motion.div 
+                key="premium-loader" 
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }} 
+                transition={{ duration: 0.8, ease: 'easeIn' }} 
+                className="relative z-[200]"
+              >
+                <Loader />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {!isInitializing && <AppContent />}
+        </div>
       </CartProvider>
     </SiteSettingsProvider>
   );
 }
 
-function AppContent({ loading }) {
+function AppContent() {
   const location = useLocation();
   const { demoMode } = useSiteSettings();
 
   return (
-    <div className="min-h-screen bg-[#f2d4a8] text-brand-brown antialiased">
+    <>
       <video
         className="pointer-events-none absolute h-0 w-0 opacity-0"
         src={homeVideo}
@@ -117,14 +134,6 @@ function AppContent({ loading }) {
       </AnimatePresence>
       <SiteFooter />
       <CartToast />
-
-      <AnimatePresence>
-        {loading && (
-          <motion.div key="premium-loader" exit={{ opacity: 0 }} transition={{ duration: 0.8, ease: 'easeIn' }} className="relative z-[200]">
-            <Loader />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    </>
   );
 }

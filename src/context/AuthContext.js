@@ -7,7 +7,7 @@ export const useAuthStore = create((set, get) => ({
   loading: true,
 
   initializeAuth: () => {
-    // Get initial session
+    // Get initial session and start listener
     supabase.auth.getSession().then(({ data: { session } }) => {
       set({ 
         session, 
@@ -16,7 +16,6 @@ export const useAuthStore = create((set, get) => ({
       });
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         set({ 
@@ -27,9 +26,7 @@ export const useAuthStore = create((set, get) => ({
       }
     );
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   },
 
   signIn: async (email, password) => {
