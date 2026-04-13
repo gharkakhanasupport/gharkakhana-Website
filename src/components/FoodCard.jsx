@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { FiPlus, FiCheck, FiMinus } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { useAuthStore } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const categoryColors = {
   Breakfast: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
@@ -17,6 +19,8 @@ const defaultColor = { bg: 'bg-brand-cream/60', text: 'text-brand-brown', border
 
 export function FoodCard({ item, onClick, index = 0 }) {
   const colors = categoryColors[item.category] || defaultColor;
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
   const { addToCart, updateQuantity, getItemQuantity } = useCart();
   const quantityInCart = getItemQuantity(item.id);
 
@@ -24,10 +28,10 @@ export function FoodCard({ item, onClick, index = 0 }) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.06 }}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.3, ease: 'easeOut', delay: Math.min(index * 0.04, 0.4) }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick?.(item)}
       className="group cursor-pointer overflow-hidden rounded-[1.8rem] border border-brand-brown/8 bg-white shadow-[0_4px_20px_rgba(47,42,61,0.06)] transition-shadow hover:shadow-[0_12px_36px_rgba(47,42,61,0.12)]"
     >
@@ -56,18 +60,18 @@ export function FoodCard({ item, onClick, index = 0 }) {
 
         {/* Category Tag */}
         {item.category && (
-          <div className={`absolute left-3 top-3 rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${colors.bg} ${colors.text} ${colors.border}`}>
+          <div className={`absolute left-3 top-3 rounded-full border px-3 py-1 text-xs font-semibold ${colors.bg.replace('/60', '/90')} ${colors.text} ${colors.border}`}>
             {item.category}
           </div>
         )}
 
         {/* Status Badge */}
-        <div className={`absolute left-3 bottom-3 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm ${
+        <div className={`absolute left-3 bottom-3 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
           isAvailable
-            ? 'bg-green-50/90 text-green-700 border border-green-200/60'
-            : 'bg-red-50/90 text-red-600 border border-red-200/60'
+            ? 'bg-green-50 text-green-700 border border-green-200/60'
+            : 'bg-red-50 text-red-600 border border-red-200/60'
         }`}>
-          <span className={`h-1.5 w-1.5 rounded-full ${isAvailable ? 'bg-green-500 animate-pulse' : 'bg-red-400'}`} />
+          <span className={`h-1.5 w-1.5 rounded-full ${isAvailable ? 'bg-green-500' : 'bg-red-400'}`} />
           {isAvailable ? 'Active' : 'Inactive'}
         </div>
       </div>
@@ -130,6 +134,10 @@ export function FoodCard({ item, onClick, index = 0 }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                if (!user) {
+                  navigate('/signin');
+                  return;
+                }
                 addToCart(item);
               }}
               disabled={!isAvailable}

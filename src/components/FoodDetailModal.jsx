@@ -4,8 +4,10 @@ import { useAuthStore } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 export function FoodDetailModal({ item, isOpen, onClose }) {
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   const { addToCart } = useCart();
   const [favLoading, setFavLoading] = useState(false);
@@ -136,6 +138,10 @@ export function FoodDetailModal({ item, isOpen, onClose }) {
                 </button>
                 <button
                   onClick={() => {
+                    if (!user) {
+                      navigate('/signin');
+                      return;
+                    }
                     addToCart(item);
                     onClose();
                   }}

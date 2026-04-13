@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence, LayoutGroup, Reorder } from 'framer-motion';
-import { FiSearch, FiX, FiPlus, FiTrash2, FiCheck, FiEdit3, FiChevronDown, FiGrid, FiList } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiSearch, FiX, FiChevronDown } from 'react-icons/fi';
 import { Container } from '../components/Container';
 import { FoodCard } from '../components/FoodCard';
 import { KitchenCard } from '../components/KitchenCard';
@@ -11,7 +11,7 @@ import { useMenu, useKitchens } from '../hooks/useMenu';
 import { BannerSection } from '../components/BannerSection';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 import { useBanners } from '../hooks/useBanners';
-import { DEMO_MENU_SECTIONS } from '../data/demoData';
+
 
 const SORT_OPTIONS = [
   { key: 'default', label: 'Default' },
@@ -26,66 +26,14 @@ const AVAILABILITY_FILTERS = [
   { key: 'soldout', label: 'Sold Out' },
 ];
 
-function SectionSidebar({ sections, activeSection, onSelect, onReorder, onAdd, onRename, onDelete, dishCountMap }) {
-  const [addingNew, setAddingNew] = useState(false);
-  const [newName, setNewName] = useState('');
-  const [editingId, setEditingId] = useState(null);
-  const [editName, setEditName] = useState('');
-
-  const handleAdd = () => {
-    if (newName.trim()) {
-      onAdd(newName.trim());
-      setNewName('');
-      setAddingNew(false);
-    }
-  };
-
-  const handleRename = (id) => {
-    if (editName.trim()) {
-      onRename(id, editName.trim());
-      setEditingId(null);
-    }
-  };
-
+function SectionSidebar({ categories, activeSection, onSelect, dishCountMap }) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-brand-brown/6">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-brand-brown/6">
         <h3 className="text-sm font-bold text-brand-brown uppercase tracking-wider">Sections</h3>
-        <button
-          onClick={() => setAddingNew(true)}
-          className="flex items-center gap-1 text-xs font-bold text-brand-green hover:text-brand-greenDark transition-colors"
-        >
-          <FiPlus className="h-3.5 w-3.5" /> Add
-        </button>
       </div>
 
-      {addingNew && (
-        <div className="px-3 py-2 border-b border-brand-brown/6">
-          <div className="flex items-center gap-2">
-            <input
-              autoFocus
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
-              placeholder="Section name..."
-              className="flex-1 rounded-lg border border-brand-brown/10 bg-white px-3 py-1.5 text-sm text-brand-brown placeholder:text-brand-brown/40 focus:border-brand-green/40 focus:outline-none focus:ring-1 focus:ring-brand-green/20"
-            />
-            <button onClick={handleAdd} className="rounded-lg bg-brand-green p-1.5 text-white hover:bg-brand-greenDark transition-colors">
-              <FiCheck className="h-3.5 w-3.5" />
-            </button>
-            <button onClick={() => { setAddingNew(false); setNewName(''); }} className="rounded-lg bg-brand-brown/10 p-1.5 text-brand-brown/50 hover:bg-brand-brown/20 transition-colors">
-              <FiX className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      <Reorder.Group
-        axis="y"
-        values={sections}
-        onReorder={onReorder}
-        className="flex-1 overflow-y-auto py-1 space-y-0.5"
-      >
+      <div className="flex-1 overflow-y-auto py-2 space-y-0.5">
         {/* All section */}
         <button
           onClick={() => onSelect('All')}
@@ -99,59 +47,21 @@ function SectionSidebar({ sections, activeSection, onSelect, onReorder, onAdd, o
           <span className="text-xs text-brand-brown/40">{Object.values(dishCountMap).reduce((a, b) => a + b, 0)}</span>
         </button>
 
-        {sections.map((section) => (
-          <Reorder.Item key={section.id} value={section} className="list-none">
-            <div
-              className={`group flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all cursor-grab active:cursor-grabbing ${
-                activeSection === section.name
-                  ? 'bg-brand-green/10 text-brand-green border-l-4 border-brand-green'
-                  : 'text-brand-brown/70 hover:bg-brand-cream/50 border-l-4 border-transparent'
-              }`}
-            >
-              {editingId === section.id ? (
-                <div className="flex items-center gap-1.5 flex-1">
-                  <input
-                    autoFocus
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleRename(section.id);
-                      if (e.key === 'Escape') setEditingId(null);
-                    }}
-                    className="flex-1 rounded border border-brand-brown/10 bg-white px-2 py-1 text-sm focus:outline-none focus:border-brand-green/40"
-                  />
-                  <button onClick={() => handleRename(section.id)} className="text-brand-green hover:text-brand-greenDark">
-                    <FiCheck className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <button onClick={() => onSelect(section.name)} className="flex-1 text-left truncate">
-                    {section.name}
-                  </button>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-brand-brown/40">{dishCountMap[section.name] || 0}</span>
-                    <div className="hidden group-hover:flex items-center gap-0.5">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setEditingId(section.id); setEditName(section.name); }}
-                        className="rounded p-1 text-brand-brown/30 hover:text-brand-brown/60 hover:bg-brand-brown/5 transition-colors"
-                      >
-                        <FiEdit3 className="h-3 w-3" />
-                      </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); onDelete(section.id); }}
-                        className="rounded p-1 text-brand-brown/30 hover:text-red-500 hover:bg-red-50 transition-colors"
-                      >
-                        <FiTrash2 className="h-3 w-3" />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </Reorder.Item>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => onSelect(cat)}
+            className={`w-full flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all ${
+              activeSection === cat
+                ? 'bg-brand-green/10 text-brand-green border-l-4 border-brand-green'
+                : 'text-brand-brown/70 hover:bg-brand-cream/50 border-l-4 border-transparent'
+            }`}
+          >
+            <span className="truncate">{cat}</span>
+            <span className="text-xs text-brand-brown/40">{dishCountMap[cat] || 0}</span>
+          </button>
         ))}
-      </Reorder.Group>
+      </div>
     </div>
   );
 }
@@ -171,42 +81,10 @@ export function MenuPage() {
   const [availFilter, setAvailFilter] = useState('all');
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
-  // Menu sections with local ordering
-  const [sections, setSections] = useState([]);
-
-  useEffect(() => {
-    const stored = localStorage.getItem('gkk_menu_sections');
-    if (stored) {
-      try { setSections(JSON.parse(stored)); } catch { /* ignore */ }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (sections.length === 0 && categories.length > 0) {
-      const initial = demoMode
-        ? DEMO_MENU_SECTIONS
-        : categories.map((cat, i) => ({ id: `sec-${i}`, name: cat, order: i }));
-      setSections(initial);
-    }
-  }, [categories, demoMode]);
-
-  const saveSections = (newSections) => {
-    setSections(newSections);
-    localStorage.setItem('gkk_menu_sections', JSON.stringify(newSections));
-  };
-
-  const handleAddSection = (name) => {
-    const newSection = { id: `sec-${Date.now()}`, name, order: sections.length };
-    saveSections([...sections, newSection]);
-  };
-
-  const handleRenameSection = (id, newName) => {
-    saveSections(sections.map(s => s.id === id ? { ...s, name: newName } : s));
-  };
-
-  const handleDeleteSection = (id) => {
-    saveSections(sections.filter(s => s.id !== id));
-  };
+  // Sorted categories
+  const sortedCategories = useMemo(() => {
+    return [...categories].sort((a, b) => a.localeCompare(b));
+  }, [categories]);
 
   // Dish count per section
   const dishCountMap = useMemo(() => {
@@ -317,7 +195,7 @@ export function MenuPage() {
       )}
 
       {/* Top Controls */}
-      <section className="sticky top-[90px] z-30 bg-[#f2d4a8]/95 backdrop-blur-md py-4 border-b border-brand-brown/5">
+      <section className="sticky top-[90px] z-30 bg-[#f2d4a8]/98 backdrop-blur-sm py-4 border-b border-brand-brown/5">
         <Container>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-wrap items-center gap-4">
@@ -373,15 +251,11 @@ export function MenuPage() {
             <div className="flex gap-6">
               {/* Sidebar - Desktop */}
               <div className="hidden lg:block w-[260px] shrink-0">
-                <div className="sticky top-[180px] rounded-2xl bg-white/70 backdrop-blur border border-white/50 shadow-sm overflow-hidden max-h-[calc(100vh-200px)]">
+                <div className="sticky top-[180px] rounded-2xl bg-white/90 backdrop-blur-sm border border-white/50 shadow-sm overflow-hidden max-h-[calc(100vh-200px)]">
                   <SectionSidebar
-                    sections={sections}
+                    categories={sortedCategories}
                     activeSection={activeSection}
                     onSelect={setActiveSection}
-                    onReorder={saveSections}
-                    onAdd={handleAddSection}
-                    onRename={handleRenameSection}
-                    onDelete={handleDeleteSection}
                     dishCountMap={dishCountMap}
                   />
                 </div>
@@ -401,17 +275,17 @@ export function MenuPage() {
                     >
                       All
                     </button>
-                    {sections.map(sec => (
+                    {sortedCategories.map(cat => (
                       <button
-                        key={sec.id}
-                        onClick={() => setActiveSection(sec.name)}
+                        key={cat}
+                        onClick={() => setActiveSection(cat)}
                         className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold transition-all ${
-                          activeSection === sec.name
+                          activeSection === cat
                             ? 'bg-brand-green text-white shadow-sm'
                             : 'bg-white/70 text-brand-brown/60 border border-brand-brown/10'
                         }`}
                       >
-                        {sec.name}
+                        {cat}
                       </button>
                     ))}
                   </div>
