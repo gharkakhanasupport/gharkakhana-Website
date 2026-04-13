@@ -1,18 +1,26 @@
 export const DEMO_BANNERS = [
   {
     id: 'b1',
-    image: '/demo_banner_offer_1776021484715.png',
-    title: 'Welcome Offer',
-    subtitle: 'Flat 50% off on your first order from any home kitchen.',
-    buttonText: 'Order Now',
+    image: '/banner_thali.png',
+    title: 'Authentic Homemade Thalis',
+    subtitle: 'Taste the warmth of real home kitchens. Traditional recipes, cooked with love and delivered fresh.',
+    buttonText: 'Explore Menu',
     link: '/menu'
   },
   {
     id: 'b2',
-    image: '/demo_banner_free_delivery_1776021643360.png',
-    title: 'Free Delivery',
-    subtitle: 'Enjoy zero delivery fees on all orders above ₹499.',
-    buttonText: 'Explore More',
+    image: '/banner_biryani.png',
+    title: 'Kolkata\'s Finest Biryani',
+    subtitle: 'Fragrant Basmati, tender meat, and the signature Kolkata potato. Pure homemade goodness.',
+    buttonText: 'Order Biryani',
+    link: '/menu'
+  },
+  {
+    id: 'b3',
+    image: '/banner_sweets.png',
+    title: 'Sweeten Your Day',
+    subtitle: 'From Roshogolla to Mishti Doi, indulge in authentic Bengali desserts made by specialized home chefs.',
+    buttonText: 'Order Sweets',
     link: '/menu'
   }
 ];
