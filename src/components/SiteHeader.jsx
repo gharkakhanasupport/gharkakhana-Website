@@ -13,10 +13,10 @@ import { useSiteSettings } from '../context/SiteSettingsContext';
 const logoUrl = new URL('../Images/GharKakhana Logo.png', import.meta.url).href;
 
 function navClassName({ isActive }) {
-  return `font-navbar relative rounded-full px-3 py-2 text-sm font-bold tracking-tight transition ${
+  return `font-navbar relative rounded-full px-4 py-2 text-sm font-extrabold tracking-tight transition-all duration-300 ${
     isActive
-      ? 'bg-brand-beige/70 text-brand-brown shadow-[0_6px_14px_rgba(47,42,61,0.06)]'
-      : 'text-brand-brown/82 hover:bg-white hover:text-brand-brown'
+      ? 'bg-brand-green text-white shadow-[0_8px_20px_rgba(95,166,59,0.25)]'
+      : 'text-brand-brown/80 hover:bg-white hover:text-brand-brown'
   }`;
 }
 
@@ -219,7 +219,7 @@ export function SiteHeader() {
                     key={link.to}
                     to={link.to}
                     className={({ isActive }) =>
-                      `font-navbar flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-bold ${isActive ? 'bg-white text-brand-brown shadow-[0_8px_18px_rgba(47,42,61,0.08)]' : 'text-brand-brown hover:bg-white/85'}`
+                      `font-navbar flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-black transition-all duration-300 ${isActive ? 'bg-brand-green text-white shadow-[0_10px_25px_rgba(95,166,59,0.3)]' : 'text-brand-brown/90 hover:bg-white/90'}`
                     }
                   >
                     {link.label}
