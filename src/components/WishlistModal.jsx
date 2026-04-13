@@ -62,24 +62,24 @@ export function WishlistModal({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-brand-brown/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-brand-brown/60 backdrop-blur-sm"
           />
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-md overflow-hidden rounded-[2.5rem] border border-white/20 bg-white/95 p-8 shadow-2xl backdrop-blur-md md:p-10"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-md overflow-y-auto max-h-[calc(100vh-2rem)] rounded-[2.5rem] border border-white/20 bg-white p-6 shadow-2xl backdrop-blur-md md:p-10"
           >
             <button
               onClick={onClose}
-              className="absolute right-6 top-6 rounded-full p-2 text-brand-brown/40 transition hover:bg-brand-brown/5 hover:text-brand-brown"
+              className="absolute right-6 top-6 z-30 rounded-full bg-brand-brown/5 p-2 text-brand-brown/60 transition hover:bg-brand-brown/10 hover:text-brand-brown"
             >
               <FiX className="h-5 w-5" />
             </button>
@@ -95,7 +95,7 @@ export function WishlistModal({ isOpen, onClose }) {
                 </div>
                 <h3 className="text-2xl font-bold text-brand-brown">You're on the wishlist!</h3>
                 <p className="mt-4 text-brand-brown/70">
-                  Fresh offers coming your way soon 🍲
+                  Joined wishlist successfully! You will be notified for every update, stay tuned. 🍲
                 </p>
                 <Button onClick={onClose} className="mt-8 px-10">
                   Got it

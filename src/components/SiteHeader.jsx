@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useScroll } from 'framer-motion';
+import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { FiMail } from 'react-icons/fi';
+import { FiMail, FiMenu, FiShoppingCart } from 'react-icons/fi';
 import { navLinks } from '../data/site';
 import { Button } from './Button';
 import { Container } from './Container';
 import { AuthModal } from './AuthModal';
 import { WishlistModal } from './WishlistModal';
+import { useAuthStore } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 const logoUrl = new URL('../Images/GharKakhana Logo.png', import.meta.url).href;
-
-const mobileLinks = [
-  ...navLinks,
-  { label: 'Terms & Conditions', to: '/terms-and-conditions' },
-  { label: 'Refund Policy', to: '/refund-policy' },
-];
 
 function navClassName({ isActive }) {
   return `font-navbar relative rounded-full px-3 py-2 text-sm font-bold tracking-tight transition ${
@@ -28,9 +24,31 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, signOut } = useAuthStore();
+  const { getTotalItems } = useCart();
   const { scrollYProgress } = useScroll();
+  const { demoMode } = useSiteSettings();
+
+  const isAppRoute = location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/menu') || location.pathname.startsWith('/kitchen') || location.pathname.startsWith('/cart') || location.pathname.startsWith('/checkout');
+  
+  let currentNavLinks = navLinks;
+  if (isAppRoute) {
+    currentNavLinks = [
+      { label: 'Home', to: '/' },
+      { label: 'Dishes', to: '/menu' },
+      { label: 'Menu', to: '/menu' }
+    ];
+    if (user) currentNavLinks.push({ label: 'Dashboard', to: '/dashboard' });
+  }
+
+  const currentMobileLinks = [
+    ...currentNavLinks,
+    { label: 'Terms & Conditions', to: '/terms-and-conditions' },
+    { label: 'Refund Policy', to: '/refund-policy' },
+  ];
 
   useEffect(() => {
     setOpen(false);
@@ -63,10 +81,15 @@ export function SiteHeader() {
                 </strong>
                 <span className="mt-1 block text-[0.74rem] font-semibold tracking-[0.14em] text-brand-brown/60">Food delivery</span>
               </div>
+              {demoMode && (
+                <div className="ml-4 rounded-full bg-brand-green/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-green border border-brand-green/20">
+                  Demo Mode
+                </div>
+              )}
             </button>
 
             <nav className="font-navbar hidden items-center gap-2 rounded-full border border-brand-brown/10 bg-brand-cream/55 px-2 py-1.5 md:flex md:justify-self-center">
-              {navLinks.map((link) => (
+              {currentNavLinks.map((link) => (
                 <NavLink key={link.to} to={link.to} className={navClassName}>
                   {link.label}
                 </NavLink>
@@ -81,9 +104,65 @@ export function SiteHeader() {
                 <FiMail className="text-brand-green" />
                 <span>Get Offer Alerts</span>
               </button>
-              <Button onClick={() => setIsAuthOpen(true)} className="font-navbar h-[46px] px-6 text-base font-bold tracking-tight cursor-pointer">
-                Sign Up
-              </Button>
+
+              <button
+                onClick={() => navigate('/cart')}
+                className="relative flex h-[46px] w-[46px] items-center justify-center rounded-full border border-brand-brown/10 bg-white/50 text-brand-brown hover:bg-white transition-all cursor-pointer"
+              >
+                <FiShoppingCart className="h-5 w-5" />
+                <AnimatePresence>
+                  {getTotalItems() > 0 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm border-2 border-[#f2d4a8]"
+                    >
+                      {getTotalItems()}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                    className="flex items-center gap-2 rounded-full border border-brand-brown/10 bg-white/50 pl-2 pr-4 py-1 hover:bg-white transition-all cursor-pointer"
+                  >
+                    <div className="h-8 w-8 overflow-hidden rounded-full border border-brand-green/20 bg-brand-green flex items-center justify-center text-white font-bold uppercase text-xs">
+                      {user.user_metadata?.avatar_url ? (
+                        <img src={user.user_metadata.avatar_url} alt="Profile" className="h-full w-full object-cover" />
+                      ) : (
+                        user.user_metadata?.first_name?.[0] || user.user_metadata?.full_name?.[0] || user.email[0]
+                      )}
+                    </div>
+                    <FiMenu className="text-brand-brown/70 h-5 w-5" />
+                  </button>
+                  <AnimatePresence>
+                    {isProfileMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="absolute -right-3 top-full mt-2 w-48 origin-top-right rounded-2xl border border-brand-brown/10 bg-white shadow-soft py-2 flex flex-col font-navbar"
+                      >
+                        <button onClick={() => { setIsProfileMenuOpen(false); navigate('/dashboard'); }} className="px-4 py-3 text-left text-[0.95rem] font-bold text-brand-brown hover:bg-brand-brown/5 transition-colors">
+                          Dashboard
+                        </button>
+                        <div className="h-px bg-brand-brown/5 mx-2 my-1"></div>
+                        <button onClick={() => { setIsProfileMenuOpen(false); signOut(); navigate('/'); }} className="px-4 py-3 text-left text-[0.95rem] font-bold text-red-600 hover:bg-red-50 transition-colors">
+                          Sign Out
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Button onClick={() => navigate('/signup')} className="font-navbar h-[46px] px-6 text-base font-bold tracking-tight cursor-pointer">
+                  Sign Up
+                </Button>
+              )}
             </div>
 
             <button
@@ -135,7 +214,7 @@ export function SiteHeader() {
               </div>
 
               <nav className="mt-6 space-y-2">
-                {mobileLinks.map((link) => (
+                {currentMobileLinks.map((link) => (
                   <NavLink
                     key={link.to}
                     to={link.to}
@@ -149,9 +228,27 @@ export function SiteHeader() {
               </nav>
 
               <div className="font-navbar mt-8 rounded-3xl border border-brand-brown/15 bg-white p-4">
-                <Button onClick={() => { setOpen(false); setIsAuthOpen(true); }} className="font-navbar w-full font-bold tracking-tight cursor-pointer">
-                  Sign Up
-                </Button>
+                {user ? (
+                  <>
+                    <Button onClick={() => { setOpen(false); navigate('/dashboard'); }} className="font-navbar w-full font-bold tracking-tight cursor-pointer mb-2">
+                      Dashboard
+                    </Button>
+                    <button onClick={() => { setOpen(false); signOut(); navigate('/'); }} className="w-full rounded-2xl py-3 text-center text-sm font-bold text-red-600 hover:bg-red-50 border border-red-100 transition-colors">
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <Button onClick={() => { setOpen(false); navigate('/signup'); }} className="font-navbar w-full font-bold tracking-tight cursor-pointer">
+                    Sign Up
+                  </Button>
+                )}
+                <button
+                  onClick={() => { setOpen(false); navigate('/cart'); }}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-brand-brown/20 bg-white py-3 text-sm font-bold text-brand-brown transition-all hover:bg-brand-brown/5"
+                >
+                  <FiShoppingCart />
+                  <span>Cart ({getTotalItems()} Items)</span>
+                </button>
                 <button
                   onClick={() => { setOpen(false); setIsWishlistOpen(true); }}
                   className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-brand-green/20 bg-brand-green/5 py-3 text-sm font-bold text-brand-green transition-all hover:bg-brand-green/10"

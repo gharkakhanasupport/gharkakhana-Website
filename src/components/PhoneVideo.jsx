@@ -30,7 +30,7 @@ export function PhoneVideo() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
         />
       </div>
     </div>

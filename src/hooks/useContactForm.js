@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const endpoint = 'https://script.google.com/macros/s/AKfycbyaoiVMgMq9Ph5mMQe_DBOboz1zmUB9412VKdbgzeCKZEO7eqNrteCNqlfOTRMwyES7pQ/exec';
 
@@ -20,11 +21,11 @@ function validate(values) {
 
   return errors;
 }
-
 export function useContactForm() {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
+  const { demoMode } = useSiteSettings();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -42,6 +43,13 @@ export function useContactForm() {
     }
 
     setStatus('loading');
+
+    if (demoMode) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setStatus('success');
+      setValues(initialState);
+      return true;
+    }
 
     try {
       await fetch(endpoint, {

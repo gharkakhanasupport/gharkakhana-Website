@@ -10,6 +10,12 @@ import { FaApple, FaGooglePlay } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import homeVideo from '../Video/home-video.mp4';
 import { WishlistModal } from '../components/WishlistModal';
+import { FoodCard } from '../components/FoodCard';
+import { FoodDetailModal } from '../components/FoodDetailModal';
+import { useMenuAll } from '../hooks/useMenu';
+import { BannerSection } from '../components/BannerSection';
+import { useSiteSettings } from '../context/SiteSettingsContext';
+import { useBanners } from '../hooks/useBanners';
 
 
 
@@ -136,6 +142,7 @@ function HeroVisual() {
           loop 
           muted 
           playsInline 
+          preload="auto"
           className="relative z-10 w-full aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] rounded-[1.8rem] object-cover bg-brand-cream/50" 
         >
           <source src={homeVideo} type="video/mp4" />
@@ -220,6 +227,10 @@ export function HomePage() {
   const ctaButtonRefs = useRef([]);
   const [showToast, setShowToast] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const { items: menuSpecials, loading: menuLoading } = useMenuAll();
+  const { demoMode } = useSiteSettings();
+  const { banners } = useBanners();
 
   const handleStoreClick = (e) => {
     e.preventDefault();
@@ -295,27 +306,27 @@ export function HomePage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="surface-panel rounded-[2.25rem] border border-brand-brown/10 px-6 py-8 md:px-10 md:py-11 lg:px-12"
+            className="surface-panel rounded-[2.25rem] border border-brand-brown/10 px-5 py-7 md:px-10 md:py-11 lg:px-12"
           >
-            <div className="grid gap-10 lg:grid-cols-[1fr_1.04fr] lg:items-center lg:gap-12">
+            <div className="grid gap-8 lg:grid-cols-[1fr_1.04fr] lg:items-center lg:gap-12">
               <div className="max-w-xl">
                 <span className="eyebrow bg-white/86">Super fast delivery</span>
-                <h1 className="mt-6 text-5xl font-bold leading-[1.03] tracking-tight text-brand-brown sm:text-6xl lg:text-[4.15rem]">
+                <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-brand-brown sm:text-6xl lg:text-[4.15rem]">
                   From kitchen
                   <span className="block">to your doorstep,</span>
                   <span className="block text-brand-green">anywhere!</span>
                 </h1>
 
-                <p className="mt-6 max-w-lg text-[1.05rem] leading-8 text-brand-brown/78">
+                <p className="mt-6 max-w-lg text-[1rem] leading-7 text-brand-brown/78 md:text-[1.05rem] md:leading-8">
                   Home delivery and reservation platform for clean, comfort-first meals from trusted kitchens. Built to feel premium, simple, and reliable.
                 </p>
 
-                <div className="mt-8 flex flex-wrap gap-3.5">
-                  <Button as="link" to="/contact" className="px-7 py-3.5">Order Now</Button>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button as="link" to="/menu" className="w-full sm:w-auto px-7 py-3.5">Order Now</Button>
                   <Button 
                     type="button"
                     variant="secondary" 
-                    className="px-7 py-3.5"
+                    className="w-full sm:w-auto px-7 py-3.5"
                     onClick={() => setIsWishlistOpen(true)}
                   >
                     Get Offer Alerts
@@ -328,11 +339,17 @@ export function HomePage() {
                 </div>
               </div>
 
-              <HeroVisual />
+              <div className="mt-8 lg:mt-0">
+                <HeroVisual />
+              </div>
             </div>
           </motion.div>
         </Container>
       </section>
+
+      {banners.length > 0 && (
+        <BannerSection banners={banners} />
+      )}
 
       <section id="concept" className="section-pad">
         <Container>
@@ -467,6 +484,59 @@ export function HomePage() {
         </Container>
       </section>
 
+      {/* Today's Specials — Real-time from Supabase */}
+      <section id="specials" className="section-pad">
+        <Container>
+          <Reveal>
+            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+              <span className="eyebrow">🔥 Live from our kitchens</span>
+              <h2 className="mt-5 text-4xl font-bold tracking-tight text-brand-brown sm:text-5xl">
+                Today's Specials
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-8 text-brand-brown/78 sm:text-lg">
+                Fresh dishes added by our home chefs, updated in real-time. What's cooking today?
+              </p>
+            </div>
+          </Reveal>
+
+          {menuLoading ? (
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse rounded-[1.8rem] bg-white/60 border border-brand-brown/8">
+                  <div className="aspect-[4/3] rounded-t-[1.8rem] bg-brand-cream/80" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-5 w-2/3 rounded-lg bg-brand-cream/80" />
+                    <div className="h-3 w-full rounded-lg bg-brand-cream/60" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : menuSpecials.length > 0 ? (
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {menuSpecials.slice(0, 6).map((item, idx) => (
+                <FoodCard key={item.id} item={item} index={idx} onClick={setSelectedItem} />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12 flex flex-col items-center py-12 text-center">
+              <span className="text-5xl">👨‍🍳</span>
+              <p className="mt-4 text-lg font-semibold text-brand-brown/70">Menu is being prepared...</p>
+              <p className="mt-2 text-sm text-brand-brown/50">Our chefs are getting ready. Check back soon!</p>
+            </div>
+          )}
+
+          {menuSpecials.length > 0 && (
+            <Reveal>
+              <div className="mt-10 flex justify-center">
+                <Button as="link" to="/menu" variant="secondary" className="px-8 py-3.5">
+                  View Full Menu →
+                </Button>
+              </div>
+            </Reveal>
+          )}
+        </Container>
+      </section>
+
       <section id="conclusion" className="section-pad">
         <Container ref={ctaSectionRef}>
           <motion.div
@@ -562,23 +632,24 @@ export function HomePage() {
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="surface-panel overflow-hidden rounded-[2.5rem] bg-brand-brown p-8 md:p-16 text-center text-white"
+            className="surface-panel overflow-hidden rounded-[2.5rem] bg-brand-brown px-6 py-10 text-center text-white sm:px-8 sm:py-12 md:px-14 md:py-16"
           >
-            <div className="mx-auto max-w-2xl">
-              <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-green/20 text-brand-green mb-8">
+            <div className="mx-auto flex max-w-3xl flex-col items-center">
+              <span className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-green/20 text-brand-green sm:mb-8 sm:h-16 sm:w-16">
                 <FiMail className="h-8 w-8" />
               </span>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
-                Don't miss out on <span className="text-brand-green">homemade goodness.</span>
+              <h2 className="text-white text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl">
+                Don't miss out on
+                <span className="mt-1 block text-brand-green">homemade goodness.</span>
               </h2>
-              <p className="mt-6 text-lg text-white/70 leading-relaxed">
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:mt-6 sm:text-lg">
                 Join our wishlist to be the first to know about new chefs, daily specials, 
                 and exclusive launch offers in your neighborhood.
               </p>
-              <div className="mt-10">
+              <div className="mt-8 sm:mt-10">
                 <Button 
                   onClick={() => setIsWishlistOpen(true)}
-                  className="bg-brand-green px-10 py-4 text-lg hover:bg-brand-greenDark shadow-[0_20px_40px_rgba(95,166,59,0.3)]"
+                  className="w-full sm:w-auto bg-brand-green px-8 py-3.5 text-base sm:px-10 sm:py-4 sm:text-lg hover:bg-brand-greenDark shadow-[0_20px_40px_rgba(95,166,59,0.3)]"
                 >
                   Join Wishlist
                 </Button>
@@ -614,6 +685,7 @@ export function HomePage() {
         )}
       </AnimatePresence>
       <WishlistModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+      <FoodDetailModal item={selectedItem} isOpen={!!selectedItem} onClose={() => setSelectedItem(null)} />
     </main>
   );
 }

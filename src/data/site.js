@@ -12,6 +12,7 @@ export const theme = {
 
 export const navLinks = [
   { label: 'Home', to: '/' },
+  { label: 'Menu', to: '/menu' },
   { label: 'About Us', to: '/about' },
   { label: 'Contact', to: '/contact' },
   { label: 'Privacy', to: '/privacy-policy' },
@@ -146,6 +147,7 @@ export const footerColumns = [
       { label: 'Privacy Policy', to: '/privacy-policy' },
       { label: 'Terms & Conditions', to: '/terms-and-conditions' },
       { label: 'Refund Policy', to: '/refund-policy' },
+      { label: 'Account Deletion', to: '/account-deletion' },
     ],
   },
 ];

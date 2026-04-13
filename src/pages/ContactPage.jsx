@@ -4,6 +4,8 @@ import { Container } from '../components/Container';
 import { Reveal } from '../components/Reveal';
 import { contactDetails, contactOptions } from '../data/site';
 import { useContactForm } from '../hooks/useContactForm';
+import { useSiteSettings } from '../context/SiteSettingsContext';
+import { toast } from 'react-hot-toast';
 
 const contactMethods = [
   {
@@ -58,7 +60,20 @@ function Field({ label, name, value, onChange, error, type = 'text', placeholder
 }
 
 export function ContactPage() {
-  const { values, errors, status, handleChange, handleSubmit, resetStatus } = useContactForm();
+  const { values, errors, status, handleChange, handleSubmit: originalHandleSubmit, resetStatus } = useContactForm();
+  const { demoMode } = useSiteSettings();
+
+  const handleSubmit = async (e) => {
+    if (demoMode) {
+      e.preventDefault();
+      toast.error('Contact form is disabled in Demo Mode.', {
+        icon: '🚫',
+        duration: 4000
+      });
+      return;
+    }
+    return originalHandleSubmit(e);
+  };
 
   useEffect(() => {
     if (status === 'success' || status === 'error') {
