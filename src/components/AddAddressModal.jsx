@@ -110,15 +110,25 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
           if (!res.ok) throw new Error('Failed to fetch address');
           
           const data = await res.json();
-          // Construct a formatted address
+          // Construct a very precise formatted address
           const addressParts = [];
-          if (data.address.road || data.address.pedestrian) addressParts.push(data.address.road || data.address.pedestrian);
-          if (data.address.suburb || data.address.neighbourhood) addressParts.push(data.address.suburb || data.address.neighbourhood);
-          if (data.address.city || data.address.town || data.address.village) addressParts.push(data.address.city || data.address.town || data.address.village);
-          if (data.address.state) addressParts.push(data.address.state);
+          const addr = data.address;
           
-          const formattedAddress = addressParts.join(', ');
-          const pincode = data.address.postcode || '';
+          if (addr.building || addr.amenity || addr.office) addressParts.push(addr.building || addr.amenity || addr.office);
+          if (addr.house_number) addressParts.push(`No. ${addr.house_number}`);
+          if (addr.road || addr.pedestrian) addressParts.push(addr.road || addr.pedestrian);
+          if (addr.neighbourhood || addr.suburb) addressParts.push(addr.neighbourhood || addr.suburb);
+          if (addr.city_district) addressParts.push(addr.city_district);
+          if (addr.city || addr.town || addr.village) addressParts.push(addr.city || addr.town || addr.village);
+          if (addr.state_district) addressParts.push(addr.state_district);
+          if (addr.state) addressParts.push(addr.state);
+          
+          let formattedAddress = addressParts.filter(Boolean).join(', ');
+          
+          // Append precise coordinates
+          formattedAddress += `\n[Coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}]`;
+          
+          const pincode = addr.postcode || '';
 
           setFormData(prev => ({
             ...prev,
@@ -126,7 +136,7 @@ export function AddAddressModal({ isOpen, onClose, userId, onAddressAdded, initi
             pincode: pincode
           }));
 
-          toast.success('Location fetched successfully!', { id: 'locationToast' });
+          toast.success('Precise location fetched!', { id: 'locationToast' });
         } catch (error) {
           console.error('Reverse geocoding error:', error);
           toast.error('Failed to get address details', { id: 'locationToast' });
